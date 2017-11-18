@@ -1,0 +1,329 @@
+//全局变量
+@import './variable.less';
+//容器
+.app-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  //路由内容
+  .main-wrapper {
+    transition: all .28s ease-out;
+    margin-left: 190px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: #f8fafc;
+  }
+
+  // 大屏幕
+  &.hideSidebar {
+    .side-wrapper {
+      transform: translate(-130px, 0);
+      .navbar {
+        transform: translate(130px, 0);
+        .menu-ellipsis{
+          opacity: 0;
+        }
+      }
+      .logo-box{
+        transform: translate(130px, 0);
+      }
+      //&:hover {
+      //  transform: translate(0px, 0);
+      //  .navbar {
+      //    transform: translate(0px, 0);
+      //  }
+      //}
+    }
+    .main-wrapper {
+      margin-left: 60px;
+    }
+  }
+  // 小屏幕
+  &.hoverSideBar {
+    .side-wrapper {
+      transform: translate(-130px, 0);
+      .navbar {
+        transform: translate(130px, 0);
+        .menu-ellipsis{
+          opacity: 0;
+        }
+      }
+      //&.hover {
+      //  transform: translate(0px, 0);
+      //  .navbar {
+      //    transform: translate(0px, 0);
+      //  }
+      //}
+    }
+    .main-wrapper {
+      margin-left: 60px;
+    }
+  }
+}
+
+//tHeader
+.header {
+  //background: linear-gradient(-270deg, #16aeff 40%, #4df4ae 120%);
+  //background: linear-gradient(90deg,#15b982,#01d18b);
+  //background: linear-gradient(90deg,#404040, rgba(64, 64, 64, 0.9));
+  background: @header-bg;
+  height: 50px;
+  width: 100%;
+  color: @header-text;
+  //box-shadow: 1px 2px 10px rgba(0, 0, 0, .2);
+  z-index: 99;
+  position: relative;
+  .userBox {
+    height: 50px;
+    line-height: 50px;
+    float: right;
+    width: 112px;
+    border-left: 2px solid #eaeaea;
+    .user-head{
+      top: 9px;
+      cursor: pointer;
+      margin-right: 8px;
+      margin-left:10px;
+    }
+    .user-drop{
+
+    }
+  }
+  .nav-icon {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 24px;
+    float: left;
+    &:hover {
+      background: rgba(0, 0, 0, .1);
+      cursor: pointer;
+    }
+  }
+  .msg-group-box {
+    float: right;
+    margin-right: 10px;
+  }
+  .messageBox {
+    height: 50px;
+    float: left;
+    .iconBox {
+      font-size: 24px;
+      line-height: 50px;
+      width: 50px;
+      text-align: center;
+      cursor: pointer;
+      display: inline-block;
+      &.active {
+        background: #eee
+      }
+    }
+    .theme-switch{
+      line-height:50px;
+      text-align: center;
+    }
+  }
+  .expand-screen {
+    //position: absolute;
+    //right:0;
+    //top:0;
+    display: inline-block;
+    float: right;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 24px;
+    color: @legend-color;
+    cursor: pointer;
+  }
+}
+
+//navBar
+.side-wrapper {
+  transition: all .28s ease-out;
+  position: absolute;
+  width: 190px;
+  background: @side-bar-bg;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
+  overflow: hidden;
+  &.light{
+    background: #fff;
+  }
+  .navbar {
+    transition: all .28s ease-out;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    right: -17px;
+    .ivu-menu-item{
+      .menu-ellipsis{
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: bottom;
+        width: 100px;
+        transition: all .28s ease-out;
+      }
+    }
+    .ivu-menu-submenu-title{
+      .menu-ellipsis{
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: bottom;
+        width: 80px;
+        transition: all .28s ease-out;
+      }
+    }
+
+  }
+
+  .logo-box {
+    transition: all .28s ease-out;
+    font-size: 30px;
+    color: #fff;
+    height: 50px;
+    padding-left: 20px;
+    img{
+      vertical-align: middle;
+    }
+  }
+}
+
+.main-container {
+  height: calc(~'100% - 50px');
+  height: -webkit-calc(~'100% - 50px');
+  height: -moz-calc(~'100% - 50px');
+  height: -ms-calc(~'100% - 50px');
+  background: @container-bg;
+  .opend-tab{
+    //border-bottom: 2px solid #33383e;
+    box-shadow:  0 0 10px 0  rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index:10;
+    display: flex;
+    //margin: 0 0 10px;
+    button.prev{
+      width: 45px;
+      background: #F5F5F7;
+      border-radius:0;
+    }
+
+    .menu-tab-right{
+      width: 90px;
+      display: flex;
+      .next,.ivu-dropdown{
+        height: 35px;
+        border-radius:0;
+        width: 45px;
+      }
+      .ivu-dropdown{
+        button{
+          border:none;
+          height:35px;
+        }
+
+        .ivu-select-dropdown{
+          width: 100px;
+        }
+      }
+    }
+    button.prev,button.next{
+      background-color: #e3e7e8;
+      border: none;
+      .ivu-icon{
+        margin:0 5px;
+      }
+    }
+    button{
+      .ivu-icon{
+        margin-left: 4px;
+      }
+    }
+
+    .tabs-bar{
+      flex: 1;
+      position: relative;
+      left: 0;
+      right: 0;
+      width: calc(~'100% - 135px');
+      overflow: hidden;
+      height:35px;
+      white-space:nowrap;
+      .utab{
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: all .2s ease;
+        .scr-menu-item{
+          cursor: pointer;
+          display: inline-block;
+          background: #F5F5F7;
+          padding: 0 14px;
+          height:35px;
+          line-height: 35px;
+          color: #666;
+          font-size: 12px;
+          border-right:1px solid #ededee;
+          &.router-link-active{
+            background: #5583FF;
+            color: #fff;
+          }
+          .tab-close{
+            padding: 0 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.container {
+  height: calc(~'100% - 35px');
+  height: -webkit-calc(~'100% - 35px');
+  height: -moz-calc(~'100% - 35px');
+  height: -ms-calc(~'100% - 35px');
+  overflow: auto;
+  text-align: left;
+  overflow-x: hidden;
+}
+
+#sticker {
+  height: auto;
+  padding: 8px 10px 40px 10px;
+  min-height: 100%;
+}
+
+#stickerCon {
+  padding-bottom: 30px;
+  box-sizing: inherit;
+}
+
+#footer {
+  height: 40px;
+  width: 100%;
+  text-align: center;
+  line-height: 40px;
+  color: #ABA498;
+  font-size: 12px;
+  background: #fafafa;
+  border-top: 1px solid #E7E7E7;
+  position: relative;
+  z-index: 9;
+}
+
