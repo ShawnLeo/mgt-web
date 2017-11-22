@@ -1,6 +1,6 @@
-# mmt-platform-portal
+# mgt web
 
-> 后台管理门户
+> 管理页面
 
 ## Build Setup
 
