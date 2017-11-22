@@ -24,7 +24,7 @@ const app = {
     }],
     menuTabarWidth: null,
     menuFirsClick: true,
-    system: 'mgt'
+    system: '基础平台'
   },
   mutations: {
     /**
