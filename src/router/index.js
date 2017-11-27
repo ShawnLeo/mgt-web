@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store/index';
-import {Layout, resource, user, role, roleResource, log, iframe, login, _404, utils} from 'adm-portal';
+import Cookies from 'js-cookie';
+import {Layout, resource, user, role, roleResource, log, iframe, login, _404} from 'adm-portal';
 
 import {LoadingBar} from 'iview';
 
@@ -84,7 +85,7 @@ const router = new Router({
 });
 router.beforeEach((to, from, next) => {
   LoadingBar.start();
-  let sessionId = utils.getStore('sessionId');
+  let sessionId = Cookies.get('sessionId');
   if (sessionId) { // 如果是登陆状态
     store.dispatch('addTab', to);
     to.path === '/login' ? next({path: '/index'}) : next();

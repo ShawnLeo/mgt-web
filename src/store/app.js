@@ -1,10 +1,12 @@
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
+// import {getStore, setStore} from '../utils/storage';
+import {utils} from 'adm-portal';
 import iView from 'iview';
 
 const app = {
   state: {
     sidebar: {
-      opened: !+Cookies.get('sidebarStatus'),
+      opened: !+utils.getStore('sidebarStatus'),
       minOpen: false // 小屏时菜单状态
     },
     router: {
@@ -35,24 +37,24 @@ const app = {
       if (winWidth <= 600) {
         state.sidebar.minOpen = !state.sidebar.minOpen;
         state.sidebar.opened = false;
-        Cookies.set('sidebarStatus', 0);
+        utils.setStore('sidebarStatus', 0);
         return;
       } else {
         if (state.sidebar.opened) {
-          Cookies.set('sidebarStatus', 1);
+          utils.setStore('sidebarStatus', 1);
         } else {
-          Cookies.set('sidebarStatus', 0);
+          utils.setStore('sidebarStatus', 0);
         }
         state.sidebar.opened = !state.sidebar.opened;
       }
     },
     CLOSE_SLIDEBAR: state => {
-      Cookies.set('sidebarStatus', 0);
+      utils.setStore('sidebarStatus', 0);
       state.sidebar.opened = false;
       state.sidebar.minOpen = false;
     },
     OPEN_SLIDEBAR: state => {
-      Cookies.set('sidebarStatus', 1);
+      utils.setStore('sidebarStatus', 1);
       state.sidebar.opened = true;
     },
     /**
@@ -66,7 +68,7 @@ const app = {
      */
     SET_LANG: (state, payload) => {
       state.lang = payload;
-      Cookies.set('lang', payload);
+      utils.setStore('lang', payload);
     },
     /**
      * 搜索过滤
@@ -80,21 +82,23 @@ const app = {
       }
     },
     INIT_TAB: (state) => {
-      state.menuTabs = Cookies.get('menuTabs') ? JSON.parse(Cookies.get('menuTabs')) : state.menuTabs;
+      state.menuTabs = utils.getStore('menuTabs') ? JSON.parse(utils.getStore('menuTabs')) : state.menuTabs;
     },
     ADD_TAB: (state, payload) => {
-      // debugger;
+      if (!payload.meta.title) {
+        return;
+      }
       let router = {
         title: payload.meta.title,
-        path: payload.path
+        path: payload.path,
+        query: payload.query
       };
       state.menuTabs.push(router);
-      // console.log(state.menuTabs);
-      Cookies.set('menuTabs', JSON.stringify(state.menuTabs));
+      utils.setStore('menuTabs', JSON.stringify(state.menuTabs));
     },
     REMOVE_TAB: (state, index) => {
       state.menuTabs.splice(index, 1);
-      Cookies.set('menuTabs', JSON.stringify(state.menuTabs));
+      utils.setStore('menuTabs', JSON.stringify(state.menuTabs));
     },
     SET_MENU_TAB_WIDTH: (state, w) => {
       state.menuTabarWidth = w;
@@ -103,18 +107,13 @@ const app = {
       state.menuTabs = state.menuTabs.filter((item) => {
         return item.path === '/index';
       });
-      Cookies.set('menuTabs', JSON.stringify(state.menuTabs));
+      utils.setStore('menuTabs', JSON.stringify(state.menuTabs));
     },
-    // SWAP_TAB_POS: (state, index) => {
-    //   let target = state.menuTabs.splice(index, 1)[0];
-    //   state.menuTabs.splice(5, 0, target);
-    //   state.menuTabs = state.menuTabs;
-    // },
     CLOSE_OTHER_TAB: (state, curpath) => {
       state.menuTabs = state.menuTabs.filter((item) => {
         return (item.path === '/index') || (item.path === curpath);
       });
-      Cookies.set('menuTabs', JSON.stringify(state.menuTabs));
+      utils.setStore('menuTabs', JSON.stringify(state.menuTabs));
     }
   },
   actions: {
@@ -136,7 +135,15 @@ const app = {
     },
     addTab: ({commit, state}, router) => {
       commit('INIT_TAB');
-      let pathIndex = state.menuTabs.findIndex((n) => {
+      document.title = router.meta.title;
+      let pathIndex = state.menuTabs.findIndex((n, index) => {
+        if (!n) {
+          return false;
+        }
+        if (n.path === router.path && JSON.stringify(n.query) !== JSON.stringify(router.query)) { // 动态带参数路由
+          commit('REMOVE_TAB', index);
+          return false;
+        }
         return n.path === router.path;
       });
       if (pathIndex === -1) {
