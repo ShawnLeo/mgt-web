@@ -8,15 +8,12 @@ Vue.use(VueI18n);
 import iView from 'iview';
 Vue.use(iView);
 import Cookies from 'js-cookie';
-import {utils} from 'adm-portal';
 import store from './store/index';
 import './assets/styles/layout.less'; // 引入布局样式
 import './assets/styles/cover.less'; // 覆盖样式
 import './assets/styles/common.less';
 import 'font-awesome/css/font-awesome.min.css';
 import 'jstree/dist/themes/default/style.min.css';
-
-utils.setStore('env', process.env.NODE_ENV);
 
 var winWidth = document.documentElement.clientWidth;
 if (winWidth <= 600) {
