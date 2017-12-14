@@ -1,5 +1,5 @@
 {
-  "name": "mmt-platform-portal",
+  "name": "mmt-mgt",
   "version": "1.0.0",
   "description": "后台管理门户",
   "author": "Shawn <lishuai_247@163.com>",
@@ -25,7 +25,7 @@
     "vue-i18n": "^5.0.3",
     "vue-router": "^2.6.0",
     "vuex": "^2.3.1",
-    "adm-portal" : "^1.2.2"
+    "adm-portal" : "^1.2.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -5,7 +5,7 @@ import {app} from 'adm-portal';
 
 Vue.use(Vuex);
 app.state.system = '基础平台';
-
+app.state.env = process.env.NODE_ENV;
 const store = new Vuex.Store({
   modules: {
     app: app,
