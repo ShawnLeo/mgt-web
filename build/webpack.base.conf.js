@@ -7,32 +7,15 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-function publicPath() {
-  var publicPath = 'prod';
-  if(process.env.NODE_ENV  === 'dev' ){
-    publicPath = config.dev.assetsPublicPath;
-  }
-  if(process.env.NODE_ENV  === 'test' ){
-    publicPath = config.buildTest.assetsPublicPath;
-  }
-  if(process.env.NODE_ENV  === 'pre' ){
-    publicPath = config.buildPre.assetsPublicPath;
-  }
-  if(process.env.NODE_ENV  === 'prod' ){
-    publicPath = config.buildProd.assetsPublicPath;
-  }
-  return publicPath;
-}
-
 module.exports = {
   entry: {
     app: './src/main.js'
   },
   output: {
-    path: config.buildProd.assetsRoot,
+    path: config.build.assetsRoot,
     filename: '[name].js',
-    publicPath: publicPath()
-  },
+    publicPath: process.env.NODE_ENV  === 'dev'? config.dev.assetsPublicPath : config.build.assetsPublicPath
+},
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

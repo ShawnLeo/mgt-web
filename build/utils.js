@@ -3,19 +3,7 @@ var config = require('../config')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 exports.assetsPath = function (_path) {
-
-  var buildOptions = config.dev;
-
-  if(process.env.NODE_ENV  === 'test' ){
-    buildOptions = config.buildTest;
-  }
-  if(process.env.NODE_ENV  === 'pre' ){
-    buildOptions = config.buildPre;
-  }
-  if(process.env.NODE_ENV  === 'prod' ){
-    buildOptions = config.buildProd;
-  }
-
+  var buildOptions = process.env.NODE_ENV  === 'dev' ? config.dev : config.build;
   return path.posix.join(buildOptions.assetsSubDirectory, _path)
 }
 

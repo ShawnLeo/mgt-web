@@ -2,7 +2,6 @@ import {baseUrl} from './env';
 import {utils} from 'adm-portal';
 import axios from 'axios';
 import {Message} from 'iview';
-import router from '../router';
 import Cookies from 'js-cookie';
 
 /**
@@ -30,7 +29,7 @@ const codeEvents = (respose, codeEvents) => {
   }
   if (respose.code === '-101') { // 请登录
     Cookies.remove('sessionId');
-    router.push('/login');
+    top.location.href = location.href;
     return false;
   }
   if (respose.code === '-9') { // 失败

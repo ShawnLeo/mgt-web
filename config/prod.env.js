@@ -1,3 +1,3 @@
 module.exports = {
-  NODE_ENV: '"prod"'
+  NODE_ENV: '"' + process.env.NODE_ENV + '"'
 }

@@ -2,9 +2,9 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store/index';
 import Cookies from 'js-cookie';
-import {Layout, resource, user, role, roleResource, log, iframe, login, _404} from 'adm-portal';
+import * as portal from 'adm-portal';
 
-import {LoadingBar} from 'iview';
+// import {LoadingBar} from 'iview';
 
 Vue.use(Router);
 
@@ -15,76 +15,38 @@ const router = new Router({
     meta: {
       title: '首页 '
     },
-    component: Layout,
-    redirect: '/index',
+    component: portal.layout,
+    redirect: '/iframe?name=%E9%A6%96%E9%A1%B5&path=http%3A%2F%2Flocalhost%3A8080%2F#/index',
     children: [{
-      path: '/index',
-      meta: {
-        title: '首页'
-      },
-      // component: index
-      component: (resolve) => require(['../views/test.vue'], resolve)
-    }, {
-      path: '/sys/resource',
-      name: '资源管理',
-      meta: {
-        prevLevelName: '系统管理',
-        title: '资源管理'
-      },
-      component: resource
-    }, {
-      path: '/sys/user',
-      name: '用户管理',
-      meta: {
-        prevLevelName: '系统管理',
-        title: '用户管理'
-      },
-      component: user
-    }, {
-      path: '/sys/role',
-      name: '角色管理',
-      meta: {
-        prevLevelName: '系统管理',
-        title: '角色管理'
-      },
-      component: role
-    }, {
-      path: '/sys/roleResource',
-      name: '角色权限',
-      meta: {
-        prevLevelName: '系统管理',
-        title: '角色权限'
-      },
-      component: roleResource
-    }, {
-      path: '/sys/log',
-      name: '操作日志',
-      meta: {
-        prevLevelName: '系统管理',
-        title: '操作日志'
-      },
-      component: log
-    }, {
         path: '/iframe',
         meta: {
           title: 'iframe'
         },
-        component: iframe
+        component: portal.iframe
     }]
+  }, {
+    path: '/index',
+    meta: {
+      title: '首页'
+    },
+    // component: index
+    component: (resolve) => require(['../views/test.vue'], resolve)
   }, {
     path: '/login',
     name: 'login',
     // component: (resolve) => require(['../views/login.vue'], resolve)
-    component: login
+    component: portal.login
   }, {
     path: '/404',
     name: '404',
     // component: (resolve) => require(['../views/404.vue'], resolve)
-      component: _404
+      component: portal._404
   }]
 });
 router.beforeEach((to, from, next) => {
-  LoadingBar.start();
+  if (to.query.sessionId) { // 存入sessionId
+    Cookies.set('sessionId', to.query.sessionId);
+  }
   let sessionId = Cookies.get('sessionId');
   if (sessionId) { // 如果是登陆状态
     store.dispatch('addTab', to);
@@ -95,7 +57,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(() => {
-  LoadingBar.finish();
+  // LoadingBar.finish();
   window.scrollTo(0, 0);
 });
 
