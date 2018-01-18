@@ -4,8 +4,6 @@ import store from '../store/index';
 import Cookies from 'js-cookie';
 import * as portal from 'adm-portal';
 
-// import {LoadingBar} from 'iview';
-
 Vue.use(Router);
 
 const router = new Router({
@@ -29,21 +27,21 @@ const router = new Router({
     meta: {
       title: '首页'
     },
-    // component: index
     component: (resolve) => require(['../views/test.vue'], resolve)
   }, {
     path: '/login',
     name: 'login',
-    // component: (resolve) => require(['../views/login.vue'], resolve)
     component: portal.login
   }, {
     path: '/404',
     name: '404',
-    // component: (resolve) => require(['../views/404.vue'], resolve)
       component: portal._404
   }]
 });
 router.beforeEach((to, from, next) => {
+
+  Cookies.set('refer', from.fullPath);
+
   if (to.query.sessionId) { // 存入sessionId
     Cookies.set('sessionId', to.query.sessionId);
   }
@@ -57,7 +55,6 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach(() => {
-  // LoadingBar.finish();
   window.scrollTo(0, 0);
 });
 
