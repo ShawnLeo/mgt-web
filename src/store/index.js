@@ -8,6 +8,7 @@ Vue.use(Vuex);
 // adm-portal 请求服务与本系统保持一致，或可以自行指定访问地址
 app.state.baseUrl = baseUrl;
 app.state.loginUrl = loginUrl;
+app.state.system = '基础平台';
 const store = new Vuex.Store({
   modules: {
     app: app,
