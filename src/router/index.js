@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import store from '../store/index';
 import Cookies from 'js-cookie';
 import * as portal from 'adm-portal';
+import * as myconst from '../util/const';
 
 Vue.use(Router);
 
@@ -14,7 +15,7 @@ const router = new Router({
       title: '首页 '
     },
     component: portal.layout,
-    redirect: '/iframe?name=%E9%A6%96%E9%A1%B5&path=http%3A%2F%2Flocalhost%3A8080%2F#/index',
+    redirect: myconst.ADM_INDEX,
     children: [{
         path: '/iframe',
         meta: {
@@ -39,7 +40,6 @@ const router = new Router({
   }]
 });
 router.beforeEach((to, from, next) => {
-
   Cookies.set('refer', from.fullPath);
 
   if (to.query.sessionId) { // 存入sessionId
