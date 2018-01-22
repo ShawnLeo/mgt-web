@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import store from '../store/index';
 import Cookies from 'js-cookie';
 import * as portal from 'adm-portal';
-import * as myconst from '../util/const';
+import * as mainConst from '../util/const';
 
 Vue.use(Router);
 
@@ -48,7 +48,7 @@ router.beforeEach((to, from, next) => {
   let sessionId = Cookies.get('sessionId');
   if (sessionId) { // 如果是登陆状态
     store.dispatch('addTab', to);
-    (to.path === '/' || to.path === '/login') ? next({path: '/index'}) : next();
+    (to.path === '/' || to.path === '/login') ? next({path: mainConst.ADM_INDEX}) : next();
   } else { // 不是登陆状态
     to.path !== '/login' ? next({path: '/login'}) : next();
   }
